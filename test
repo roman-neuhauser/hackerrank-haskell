@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -eu
+
+for x in "$@"; do
+  d=${x%/*}
+  f=${x##*/}
+  [ -e $d/tests.t ] || {
+    echo "=== $x: no tests"
+    continue
+  }
+  echo "=== $x"
+  CUT=${f%.hs} cram $d
+done
